@@ -6,6 +6,7 @@ import Icons from 'src/components/Dashboard/Views/Icons';
 import Maps from 'src/components/Dashboard/Views/Maps';
 import Typography from 'src/components/Dashboard/Views/Typography';
 import TableList from 'src/components/Dashboard/Views/TableList';
+import RandomBinge from 'src/components/Dashboard/Views/RandomBinge';
 
 import DashboardLayout from '../components/Dashboard/Layout/DashboardLayout';
 // GeneralViews
@@ -56,6 +57,11 @@ const routes = [
         path: 'table-list',
         name: 'table-list',
         component: TableList,
+      },
+      {
+        path: 'random-binge',
+        name: 'random-binge',
+        component: RandomBinge,
       },
     ],
   },

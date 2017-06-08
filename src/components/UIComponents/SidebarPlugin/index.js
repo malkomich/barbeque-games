@@ -38,6 +38,11 @@ const SidebarStore = {
       icon: 'ti-bell',
       path: '/admin/notifications',
     },
+    {
+      name: 'Random Binge',
+      icon: 'ti-paint-bucket',
+      path: '/admin/random-binge',
+    },
   ],
   displaySidebar(value) {
     this.showSidebar = value;

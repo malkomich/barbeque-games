@@ -1,8 +1,16 @@
+* text=auto
+
+# These files are text and should be normalized (Convert crlf => lf)
+*.js   text
+*.html text
+*.xml  text
+*.txt  text
+
 # Auto detect text files and perform LF normalization
 *.scss linguist-language=Vue
 *.css linguist-language=Vue
 
-# Standard to msysgit
+# Documents. Standard to msysgit
 *.doc	 diff=astextplain
 *.DOC	 diff=astextplain
 *.docx diff=astextplain
@@ -13,3 +21,21 @@
 *.PDF	 diff=astextplain
 *.rtf	 diff=astextplain
 *.RTF	 diff=astextplain
+
+# Denote all files that are truly binary and should not be modified.
+# (binary is a macro for -text -diff)
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.ico  binary
+*.mov  binary
+*.mp4  binary
+*.mp3  binary
+*.flv  binary
+*.fla  binary
+*.swf  binary
+*.gz   binary
+*.zip  binary
+*.7z   binary
+*.ttf  binary

@@ -1,8 +1,11 @@
-.btn,
-.navbar .navbar-nav > li > a.btn {
-  border-radius: $border-radius-btn-base;
-  box-sizing: border-box;
+.btn {
+  border: $none;
+}
+
+.btn, .navbar .navbar-nav > li > a.btn {
+  // border-radius: $border-radius-btn-base;
   border-width: $border-thick;
+  box-sizing: border-box;
   background-color: $transparent-bg;
   font-size: $font-size-base;
   font-weight: $font-weight-semi;

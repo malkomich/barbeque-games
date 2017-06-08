@@ -71,6 +71,9 @@ module.exports = {
     'no-undef': 'warn',
     'no-unreachable': 'warn',
     'constructor-super': 'warn',
-    'valid-typeof': 'warn'
+    'valid-typeof': 'warn',
+
+    'linebreak-style': 'off',
+
   }
 }

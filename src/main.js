@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import Vuetify from 'vuetify';
 import vClickOutside from 'v-click-outside';
 
 // library imports
@@ -20,6 +21,7 @@ import './assets/sass/paper-dashboard.scss';
 
 // plugin setup
 Vue.use(VueRouter);
+Vue.use(Vuetify);
 Vue.use(GlobalComponents);
 Vue.use(vClickOutside);
 Vue.use(Notifications);
