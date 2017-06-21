@@ -3,13 +3,17 @@
 
     <div class="header">
       <h4 class="title">Players</h4>
-      <v-text-field v-for="player in players"
-          label="Player Name"
-          prepend-icon="face"
-          :value="player.name"
-          :key="player.id"
-          single-line>
-      </v-text-field>
+
+      <div v-for="player in players"
+          :key="player.id">
+        <v-text-field
+            label="Player Name"
+            prepend-icon="face"
+            v-model="player.name"
+            single-line>
+        </v-text-field>
+      </div>
+
       <v-btn dark flat v-on:click.native="addPlayer">
         <v-icon>add</v-icon>
         Add Player
@@ -39,7 +43,20 @@
   export default {
     data() {
       return {
-        type: ['', 'info', 'success', 'warning', 'danger'],
+        actions: [
+          'Bebe 1 trago',
+          'Bebe 2 tragos',
+          'Programa la B2B',
+          'Manda beber 1 trago',
+          'Manda beber 2 tragos',
+          'No puede decir tacos en los próximos 10 turnos, sino bebe 2 cada vez',
+          'Se quita una prenda o bebe 2',
+          'Cuenta un chiste, si nadie ríe bebe 2',
+          'Pone una norma para los próximos 10 turnos, quien incumpla bebe 1',
+          'Baila la macarena o no bebe en 5 turnos',
+          'Elige a una víctima que beberá los tragos que te toquen en los 5 turnos siguientes',
+          'Elige a una víctima, el primero de los 2 que termine su vaso/cerveza, gana un aplauso',
+        ],
         notifications: {
           topCenter: false,
         },
@@ -54,15 +71,14 @@
       PaperNotification,
     },
     methods: {
-      notifyVue(verticalAlign, horizontalAlign) {
-        const color = Math.floor((Math.random() * 4) + 1);
+      notifyVue(message) {
         this.$notifications.notify(
           {
-            message: 'Welcome to <b>Paper Dashboard</b> - a beautiful freebie for every web developer.',
-            icon: 'ti-gift',
-            horizontalAlign,
-            verticalAlign,
-            type: this.type[color],
+            message,
+            icon: 'ti-eye',
+            verticalAlign: 'bottom',
+            horizontalAlign: 'center',
+            type: 'danger',
           });
       },
       addPlayer() {
@@ -72,7 +88,19 @@
         });
       },
       playRound() {
+        if (!this.players[0].name || !this.players[1].name) {
+          this.notifyVue('Añade al menos 2 jugadores');
+          return;
+        }
+        this.loading = true;
+        const playerIndex = Math.floor((Math.random() * this.players.length) + 1);
+        const actionIndex = Math.floor((Math.random() * this.actions.length) + 1);
+        const message = `${this.players[playerIndex].name} ${this.actions[actionIndex]}`;
 
+        setTimeout(() => {
+          this.notifyVue(message);
+          this.loading = false;
+        }, 1000);
       },
     },
   };
