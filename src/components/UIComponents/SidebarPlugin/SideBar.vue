@@ -112,7 +112,7 @@
       this.findActiveLink();
     },
     watch: {
-      $route(newRoute, oldRoute) {
+      $route: function $route(newRoute, oldRoute) {
         this.findActiveLink();
       },
     },
