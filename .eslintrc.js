@@ -75,6 +75,8 @@ module.exports = {
 
     'linebreak-style': 'off',
     'vars-on-top': 'off',
-    'comma-dangle': 'warn'
+    'comma-dangle': 'warn',
+
+    'object-shorthand': ['warn', 'properties'],
   }
 }

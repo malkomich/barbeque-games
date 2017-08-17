@@ -6,7 +6,6 @@
           :horizontal-align="notification.horizontalAlign" @on-close="removeNotification(index)">
       </notification>
     </transition-group>
-
   </div>
 </template>
 <script>

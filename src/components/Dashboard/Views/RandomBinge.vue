@@ -27,7 +27,7 @@
               :loading="loading"
               :disabled="loading"
                v-on:click.native="playRound">
-            <v-icon light>play_arrow</v-icon>
+            <v-icon light class="light-icon">play_arrow</v-icon>
           </v-btn>
         </v-layout>
       </v-container>
@@ -93,8 +93,8 @@
           return;
         }
         this.loading = true;
-        const playerIndex = Math.floor((Math.random() * this.players.length) + 1);
-        const actionIndex = Math.floor((Math.random() * this.actions.length) + 1);
+        const playerIndex = Math.floor((Math.random() * this.players.length));
+        const actionIndex = Math.floor((Math.random() * this.actions.length));
         const message = `${this.players[playerIndex].name} ${this.actions[actionIndex]}`;
 
         setTimeout(() => {
