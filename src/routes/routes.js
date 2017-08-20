@@ -7,6 +7,7 @@ import Maps from 'src/components/Dashboard/Views/Maps';
 import Typography from 'src/components/Dashboard/Views/Typography';
 import TableList from 'src/components/Dashboard/Views/TableList';
 import RandomBinge from 'src/components/Dashboard/Views/RandomBinge';
+import CardsGame from 'src/components/Dashboard/Views/CardsGame';
 
 import DashboardLayout from '../components/Dashboard/Layout/DashboardLayout';
 // GeneralViews
@@ -63,18 +64,14 @@ const routes = [
         name: 'random-binge',
         component: RandomBinge,
       },
+      {
+        path: 'cards-game',
+        name: 'cards-game',
+        component: CardsGame,
+      },
     ],
   },
   { path: '*', component: NotFound },
 ];
-
-/**
- * Asynchronously load view (Webpack Lazy loading compatible)
- * The specified component must be inside the Views folder
- * @param  {string} name  the filename (basename) of the view to load.
-function view(name) {
-   var res= require('../components/Dashboard/Views/' + name + '.vue');
-   return res;
-};**/
 
 export default routes;

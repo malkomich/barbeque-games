@@ -3,6 +3,7 @@
 
 ## Dependencies
 node_modules/
+static/bower_components
 
 ## Build & compilation files
 dist/

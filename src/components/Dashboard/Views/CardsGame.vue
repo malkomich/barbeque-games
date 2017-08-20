@@ -4,11 +4,11 @@
     <div class="header">
       <h4 class="title">Players</h4>
       <v-text-field v-for="player in players"
-          label="Player Name"
-          prepend-icon="face"
-          :value="player.name"
-          :key="player.id"
-          single-line>
+                    label="Player Name"
+                    prepend-icon="face"
+                    :value="player.name"
+                    :key="player.id"
+                    single-line>
       </v-text-field>
       <v-btn dark flat v-on:click.native="addPlayer">
         <v-icon>add</v-icon>
@@ -19,10 +19,11 @@
     <div class="content">
       <v-container fluid>
         <v-layout row justify-space-between>
+          <game-card symbol="♣" rank="6"></game-card>
           <v-btn floating large class="purple"
-              :loading="loading"
-              :disabled="loading"
-               v-on:click.native="playRound">
+                 :loading="loading"
+                 :disabled="loading"
+                 v-on:click.native="playRound">
             <v-icon light>play_arrow</v-icon>
           </v-btn>
         </v-layout>
@@ -35,6 +36,8 @@
 
 <script>
   import PaperNotification from 'src/components/UIComponents/NotificationPlugin/Notification';
+
+  import 'game-card/game-card.html';
 
   export default {
     data() {

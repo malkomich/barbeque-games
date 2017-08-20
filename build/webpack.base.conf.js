@@ -23,6 +23,7 @@ const webpackConfig = {
     modules: [
       resolve('src'),
       resolve('node_modules'),
+      resolve('static/bower_components'),
     ],
     alias: {
       vue$: 'vue/dist/vue.common.js',
@@ -58,6 +59,18 @@ const webpackConfig = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]'),
         },
+      },
+      {
+        // If you see a file that ends in .html, send it to these loaders.
+        test: /\.html$/,
+        // This is an example of chained loaders in Webpack.
+        // Chained loaders run last to first. So it will run
+        // polymer-webpack-loader, and hand the output to
+        // babel-loader. This let's us transpile JS in our `<script>` elements.
+        use: [
+          { loader: 'babel-loader' },
+          { loader: 'polymer-webpack-loader' }
+        ]
       },
     ],
   },

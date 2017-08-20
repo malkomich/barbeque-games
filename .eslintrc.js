@@ -74,6 +74,6 @@ module.exports = {
     'valid-typeof': 'warn',
 
     'linebreak-style': 'off',
-
+    'vars-on-top': 'off',
   }
 }
