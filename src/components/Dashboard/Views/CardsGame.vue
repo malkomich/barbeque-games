@@ -17,18 +17,12 @@
     </div>
 
     <div class="content">
-      <v-container fluid>
-        <v-layout row justify-space-between>
-          <game-card symbol="♣" rank="6"></game-card>
-          <v-btn floating large class="purple"
-                 :loading="loading"
-                 :disabled="loading"
-                 v-on:click.native="playRound">
-            <v-icon light>play_arrow</v-icon>
-          </v-btn>
-        </v-layout>
-      </v-container>
-
+      <v-layout row wrap>
+        <v-flex xs4 sm3 v-for="card in gameCards" :key="card.key">
+          <game-card :symbol="card.symbol" :rank="card.rank" :flippable="card.flippable" unrevealed
+            v-on:click="playRound(card)"></game-card>
+        </v-flex>
+      </v-layout>
     </div>
 
   </div>
@@ -36,10 +30,24 @@
 
 <script>
   import PaperNotification from 'src/components/UIComponents/NotificationPlugin/Notification';
+  import GameCard from 'src/domain/game-card';
 
+  // Polymer game-card component
   import 'game-card/game-card.html';
 
   export default {
+    mounted() {
+      let cardNumber = 1;
+      while (cardNumber <= 12) {
+        this.gameCards.push(new GameCard(GameCard.CLUBS, cardNumber));
+        this.gameCards.push(new GameCard(GameCard.DIAMONDS, cardNumber));
+        this.gameCards.push(new GameCard(GameCard.HEARTS, cardNumber));
+        this.gameCards.push(new GameCard(GameCard.SPADES, cardNumber));
+        cardNumber += 1;
+      }
+      // shuffle(this.gameCards);
+      this.gameCards.sort(() => 0.5 - Math.random());
+    },
     data() {
       return {
         type: ['', 'info', 'success', 'warning', 'danger'],
@@ -51,6 +59,7 @@
           { id: 1, name: '' },
         ],
         loading: false,
+        gameCards: [],
       };
     },
     components: {
@@ -74,8 +83,8 @@
           name: '',
         });
       },
-      playRound() {
-
+      playRound(gameCard) {
+        gameCard.toggleFlippable(false);
       },
     },
   };
