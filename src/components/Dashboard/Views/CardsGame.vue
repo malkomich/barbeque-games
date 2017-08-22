@@ -1,31 +1,31 @@
 <template>
-  <div class="card">
+  <v-card class="grey lighten-4">
+    <v-card-text>
 
-    <div class="header">
-      <h4 class="title">Players</h4>
-      <v-text-field v-for="player in players"
-                    label="Player Name"
-                    prepend-icon="face"
-                    :value="player.name"
-                    :key="player.id"
-                    single-line>
-      </v-text-field>
-      <v-btn dark flat v-on:click.native="addPlayer">
-        <v-icon>add</v-icon>
-        Add Player
+      <div class="content">
+        <v-layout row wrap>
+          <v-flex xs4 sm3 lg2 xl1 v-for="card in gameCards" :key="card.key">
+            <game-card :symbol="card.symbol" :rank="card.rank" :flippable="card.flippable" :unrevealed="!card.revealed"
+              v-on:click="playRound(card)"></game-card>
+          </v-flex>
+        </v-layout>
+      </div>
+
+    </v-card-text>
+
+    <v-snackbar top warning multi-line v-model="snackbar.visible" :timeout="snackbar.timeout">
+        <b class="blue--text blue--accent-1">{{ snackbar.text }}</b>
+      <v-btn icon @click.native="snackbar.toggle()">
+        <v-icon large class="pink--text text--darken-1">close</v-icon>
       </v-btn>
-    </div>
-
-    <div class="content">
-      <v-layout row wrap>
-        <v-flex xs4 sm3 v-for="card in gameCards" :key="card.key">
-          <game-card :symbol="card.symbol" :rank="card.rank" :flippable="card.flippable" unrevealed
-            v-on:click="playRound(card)"></game-card>
-        </v-flex>
-      </v-layout>
-    </div>
-
-  </div>
+    </v-snackbar>
+    <v-snackbar bottom warning multi-line v-model="snackbar.visible" :timeout="snackbar.timeout">
+        <b class="blue--text blue--accent-1">{{ snackbar.text }}</b>
+      <v-btn icon @click.native="snackbar.toggle()">
+        <v-icon large class="pink--text text--darken-1">close</v-icon>
+      </v-btn>
+    </v-snackbar>
+  </v-card>
 </template>
 
 <script>
@@ -36,14 +36,14 @@
   import 'game-card/game-card.html';
 
   export default {
-    mounted() {
-      let cardNumber = 1;
-      while (cardNumber <= 12) {
-        this.gameCards.push(new GameCard(GameCard.CLUBS, cardNumber));
-        this.gameCards.push(new GameCard(GameCard.DIAMONDS, cardNumber));
-        this.gameCards.push(new GameCard(GameCard.HEARTS, cardNumber));
-        this.gameCards.push(new GameCard(GameCard.SPADES, cardNumber));
-        cardNumber += 1;
+    beforeMount() {
+      let rankIndex = 3;
+      while (rankIndex < GameCard.RANKS.length) {
+        this.gameCards.push(new GameCard(GameCard.CLUBS, GameCard.RANKS[rankIndex], false));
+        this.gameCards.push(new GameCard(GameCard.DIAMONDS, GameCard.RANKS[rankIndex], false));
+        this.gameCards.push(new GameCard(GameCard.HEARTS, GameCard.RANKS[rankIndex], false));
+        this.gameCards.push(new GameCard(GameCard.SPADES, GameCard.RANKS[rankIndex], false));
+        rankIndex += 1;
       }
       // shuffle(this.gameCards);
       this.gameCards.sort(() => 0.5 - Math.random());
@@ -60,21 +60,45 @@
         ],
         loading: false,
         gameCards: [],
+        snackbar: {
+          visible: false,
+          timeout: 300000, // 5min
+          toggle: function toggle() {
+            this.visible = !this.visible;
+          },
+          text: '',
+          show: function show(text) {
+            this.text = text;
+            this.visible = true;
+          },
+        },
+        rules: {
+          '5': '5 – todas las chicas beben',
+          '6': '6 – todos los chicos beben',
+          '7': '7 – Ojos de serpiente: Hasta que termine la ronda, todas las personas que te miren a los ojos, beben',
+          '8': '8 – Elige a un amigo entre los participantes. Cada vez que tu amigo bebe, tú también bebes.',
+          '9': '9 – Bebes.',
+          '10': '10 – Mandas beber.',
+          'j': 'J – El jugador a tu izquierda bebe.',
+          'q': 'Q – El jugador a tu derecha bebe.',
+          'k': 'K – Pon un poco de tu bebida en el vaso central. El que descubra el 4º Rey bebe todo el contenido del' +
+              ' vaso.',
+          'a': 'A – Puedes criar tu propria tarea o regla.',
+        },
       };
     },
     components: {
       PaperNotification,
     },
     methods: {
-      notifyVue(verticalAlign, horizontalAlign) {
-        const color = Math.floor((Math.random() * 4) + 1);
+      notifyVue(message) {
         this.$notifications.notify(
           {
-            message: 'Welcome to <b>Paper Dashboard</b> - a beautiful freebie for every web developer.',
-            icon: 'ti-gift',
-            horizontalAlign,
-            verticalAlign,
-            type: this.type[color],
+            message,
+            icon: 'ti-eye',
+            verticalAlign: 'bottom',
+            horizontalAlign: 'center',
+            type: 'danger',
           });
       },
       addPlayer() {
@@ -85,6 +109,7 @@
       },
       playRound(gameCard) {
         gameCard.toggleFlippable(false);
+        this.snackbar.show(this.rules[gameCard.rank]);
       },
     },
   };

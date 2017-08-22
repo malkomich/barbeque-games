@@ -75,5 +75,6 @@ module.exports = {
 
     'linebreak-style': 'off',
     'vars-on-top': 'off',
+    'comma-dangle': 'warn'
   }
 }

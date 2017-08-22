@@ -5,11 +5,13 @@ export default class GameCard {
   static HEARTS = '♥';
   static SPADES = '♠';
 
-  constructor(symbol, rank, flippable = true, revealed = false) {
+  static RANKS = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'j', 'q', 'k', 'a'];
+
+  constructor(symbol, rank, revealed = true, flippable = true) {
     this.symbol = symbol;
     this.rank = rank;
-    this.flippable = flippable;
     this.revealed = revealed;
+    this.flippable = flippable;
   }
 
   toggleFlippable(flippable) {
