@@ -8,6 +8,7 @@ import Typography from 'src/components/Dashboard/Views/Typography';
 import TableList from 'src/components/Dashboard/Views/TableList';
 import RandomBinge from 'src/components/Dashboard/Views/RandomBinge';
 import CardsGame from 'src/components/Dashboard/Views/CardsGame';
+import VideoGame from 'src/components/Dashboard/Views/VideoGame';
 
 import DashboardLayout from '../components/Dashboard/Layout/DashboardLayout';
 // GeneralViews
@@ -68,6 +69,11 @@ const routes = [
         path: 'cards-game',
         name: 'cards-game',
         component: CardsGame,
+      },
+      {
+        path: 'video-game',
+        name: 'video-game',
+        component: VideoGame,
       },
     ],
   },
