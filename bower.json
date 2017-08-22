@@ -1,0 +1,21 @@
+{
+  "name": "barbeque-games",
+  "description": "Multiple games for a funny barbeque party",
+  "main": "",
+  "authors": [
+    "Juan Carlos González Cabrero <malkomich@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/malkomich/barbeque-games",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "game-card": "vpusher/game-card#^1.0.5"
+  }
+}

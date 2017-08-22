@@ -43,6 +43,12 @@ const SidebarStore = {
       icon: 'ti-paint-bucket',
       path: '/admin/random-binge',
     },
+    {
+      name: 'Cards Game',
+      icon: 'ti-layout-column2',
+      path: '/admin/cards-game',
+    },
+
   ],
   displaySidebar(value) {
     this.showSidebar = value;

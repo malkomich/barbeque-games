@@ -9,7 +9,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'es6-promise/auto';
 
 // Plugins
-import GlobalComponents from './gloablComponents';
+import GlobalComponents from './globalComponents';
 import Notifications from './components/UIComponents/NotificationPlugin';
 import SideBar from './components/UIComponents/SidebarPlugin';
 import App from './App';
