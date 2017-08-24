@@ -1,9 +1,10 @@
 export default class VideoStage {
 
-  constructor(videoId, secondToPause, testOptions) {
+  constructor(videoId, secondToPause, options) {
     this.videoId = videoId;
     this.secondToPause = secondToPause;
-    this.testOptions = testOptions;
+    this.options = options;
+    this.options.sort(() => 0.5 - Math.random());
   }
 
 }

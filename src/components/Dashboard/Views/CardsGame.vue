@@ -45,7 +45,6 @@
         this.gameCards.push(new GameCard(GameCard.SPADES, GameCard.RANKS[rankIndex], false));
         rankIndex += 1;
       }
-      // shuffle(this.gameCards);
       this.gameCards.sort(() => 0.5 - Math.random());
     },
     data() {
