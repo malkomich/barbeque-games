@@ -10,4 +10,8 @@ export default class Option {
     this.checked = checked;
   }
 
+  toggle() {
+    this.checked = !this.checked;
+  }
+
 }

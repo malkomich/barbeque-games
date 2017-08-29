@@ -4,7 +4,7 @@
 
       <v-card-media>
         <div class="content">
-          <google-youtube id="googleYouTube"
+          <google-youtube ref="googleYouTube"
             chromeless
             :video-id="currentVideoStage.videoId"
             autoplay="0"
@@ -21,9 +21,9 @@
 
       <v-card-text>
         <div v-for="option in currentVideoStage.options" :key="option.text">
-          <paper-checkbox :checked="option.checked" @change="onOptionChanged(option)" :disabled="roundFinished"
-              :class="{ 'highlight-error': !option.right && roundFinished && option.checked,
-                        'highlight-success': option.right && roundFinished }">
+          <paper-checkbox :checked="option.checked" @change="onOptionChanged(option)" :disabled="submitted"
+              :class="{ 'highlight-error': !option.right && submitted && option.checked,
+                        'highlight-success': option.right && submitted }">
             {{ option.text }}
           </paper-checkbox>
         </div>
@@ -41,12 +41,15 @@
         There are no videos left. Sorry!
       </v-card-text>
     </v-card>
+
+    <Countdown :seconds="3" :running="roundFinished" @end="next()" v-if="roundFinished"></Countdown>
   </div>
 </template>
 
 <script>
   import { VideoStage, VideoState } from 'src/domain/video-stage';
   import Option from 'src/domain/option';
+  import Countdown from 'src/components/UIComponents/TimeComponents/Countdown';
   
   // Polymer youtube player component
   import 'google-youtube/google-youtube.html';
@@ -54,12 +57,15 @@
   import 'paper-checkbox/paper-checkbox.html';
 
   export default {
+    components: {
+      Countdown,
+    },
     beforeMount() {
       this.shuffleVideoStages();
     },
     mounted() {
       setTimeout(() => {
-        googleYouTube.play();
+        this.$refs.googleYouTube.play();
       }, 2000);
     },
     // <!-- Vue component lifecycle logic -->
@@ -104,6 +110,7 @@
             new Option('El hombre tira una cerilla encendida al interior del buzón'),
           ]),
         ],
+        submitted: false,
         roundFinished: false,
         selectedOption: null,
       };
@@ -119,7 +126,7 @@
     // <!-- computed -->
     methods: {
       submitAnswer() {
-        if (this.roundFinished) {
+        if (this.submitted) {
           return;
         }
         if (!this.selectedOption) {
@@ -131,26 +138,24 @@
         } else {
           this.notifyVue('HAS FALLADO!', 'danger');
         }
-        this.roundFinished = true;
-        googleYouTube.play();
+        this.submitted = true;
+        this.$refs.googleYouTube.play();
       },
       next() {
         this.videoStages.shift();
+        this.submitted = false;
         this.roundFinished = false;
         this.selectedOption = null;
       },
       onOptionChanged(selectedOption) {
-        selectedOption.check(true);
-        this.selectedOption = selectedOption;
+        selectedOption.toggle();
+        this.selectedOption = selectedOption.checked ? selectedOption : undefined;
         this.currentVideoStage.options
           .filter(option => option.text !== selectedOption.text)
           .forEach(option => option.check(false));
       },
       shuffleVideoStages() {
         this.videoStages.sort(() => 0.5 - Math.random());
-      },
-      onVideoTimeChanged(event) {
-        console.log('Current time changed', event);
       },
       notifyVue(message, type) {
         this.$notifications.notify({
@@ -163,21 +168,19 @@
       },
       onVideoTimeChange() {
         if (this.videoMustPause()) {
-          googleYouTube.pause();
+          this.$refs.googleYouTube.pause();
         }
       },
       videoMustPause() {
-        return !this.roundFinished
-          && googleYouTube.currenttime >= this.currentVideoStage.secondToPause;
+        return !this.submitted
+          && this.$refs.googleYouTube.currenttime >= this.currentVideoStage.secondToPause;
       },
       onStateChange() {
-        if (VideoState.PLAYING === googleYouTube.state && this.videoMustPause()) {
-          googleYouTube.seekTo(0);
+        if (VideoState.PLAYING === this.$refs.googleYouTube.state && this.videoMustPause()) {
+          this.$refs.googleYouTube.seekTo(0);
         }
-        if (VideoState.ENDED === googleYouTube.state) {
-          setTimeout(() => {
-            this.next();
-          }, 3000);
+        if (VideoState.ENDED === this.$refs.googleYouTube.state) {
+          this.roundFinished = true;
         }
       },
       // <!-- methods -->
