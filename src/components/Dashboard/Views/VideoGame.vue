@@ -4,13 +4,17 @@
 
       <v-card-media>
         <div class="content">
-          <google-youtube chromeless
+          <google-youtube id="googleYouTube"
+            chromeless
             :video-id="currentVideoStage.videoId"
-            autoplay="1"
+            autoplay="0"
             height="270px"
             width="480px"
             rel="0"
-            start="5">
+            start="0"
+            :playsupported="false"
+            @currenttime-changed="onVideoTimeChange()"
+            @state-changed="onStateChange()">
           </google-youtube>
         </div>
       </v-card-media>
@@ -27,7 +31,7 @@
 
       <v-card-actions>
         <v-btn flat class="teal--text" @click.native="submitAnswer()">Dale!</v-btn>
-        <v-btn flat class="grey--text" @click.native="skip()">No me la juego...</v-btn>
+        <v-btn flat class="grey--text" @click.native="next()">No me la juego...</v-btn>
       </v-card-actions>
 
     </v-card>
@@ -41,7 +45,7 @@
 </template>
 
 <script>
-  import VideoStage from 'src/domain/video-stage';
+  import { VideoStage, VideoState } from 'src/domain/video-stage';
   import Option from 'src/domain/option';
   
   // Polymer youtube player component
@@ -50,41 +54,50 @@
   import 'paper-checkbox/paper-checkbox.html';
 
   export default {
+    beforeMount() {
+      this.shuffleVideoStages();
+    },
+    mounted() {
+      setTimeout(() => {
+        googleYouTube.play();
+      }, 2000);
+    },
+    // <!-- Vue component lifecycle logic -->
     data() {
       return {
         loading: false,
         videoStages: [
-          new VideoStage('GXvSn0YxjR8', 0, [
+          new VideoStage('GXvSn0YxjR8', 8, [
             new Option('Aparece un hombre gritando con un aire acondicionado', true),
             new Option('La mujer es arrollada por un dinosaurio hasta la piscina'),
             new Option('Al quitarse la camisa, aparece un pecho lleno de pelo'),
             new Option('En realidad es un anuncio de wonderbra'),
           ]),
-          new VideoStage('96paLghfXY8', 0, [
+          new VideoStage('96paLghfXY8', 30, [
             new Option('Le arroya un grupo de ciclistas', true),
             new Option('Cae uno de los árboles de alrededor encima de él mientras baila'),
             new Option('Al hacer un paso de baile cae contra el suelo, perdiendo varios dientes'),
             new Option('La cámara aleja el zoom y se descubre que es una coreografía grupal a gran escala'),
           ]),
-          new VideoStage('kwtWTpLYvOo', 0, [
+          new VideoStage('kwtWTpLYvOo', 15, [
             new Option('Empieza a violar al globo hasta que explota', true),
             new Option('Empiezan a aparecen muchos globos iguales y el conejo sale huyendo'),
             new Option('El globo explota, aturdiendo al conejo, y acto después se traga el globo explotado'),
             new Option('Aparece repentinamente un pájaro, llevándose al conejo en el aire'),
           ]),
-          new VideoStage('LcNmFFy0Ng4', 0, [
+          new VideoStage('LcNmFFy0Ng4', 3, [
             new Option('Tira el monopatín y se desliza calle abajo sólo con sus playeras', true),
             new Option('Hay un trozo de suelo falso y se cae dentro'),
             new Option('Aparece un hombre disfrazado de pollo y le hace un placaje'),
             new Option('Al intentar subirse, cae con la cabeza en la tabla y la parte'),
           ]),
-          new VideoStage('h_hcjTdiNvk', 0, [
+          new VideoStage('h_hcjTdiNvk', 48, [
             new Option('Hay una bella mujer haciendo una felación al hombre enano', true),
             new Option('Al arrancar, el motor del coche del hombre enano tiene mayor potencia y le adelanta'),
             new Option('Aparece de repente un coro de ópera alrededor del coche deportivo'),
             new Option('El hombre enano enseña su placa de policía, y detiene al conductor del deportivo'),
           ]),
-          new VideoStage('mxIlyP-Sxw4', 0, [
+          new VideoStage('mxIlyP-Sxw4', 35, [
             new Option('Saca un arma y empieza a disparar al interior del buzón', true),
             new Option('El buzón se despega del suelo y sale huyendo'),
             new Option('Empiezan a salir un chorro potente de agua del buzón'),
@@ -95,6 +108,7 @@
         selectedOption: null,
       };
     },
+    // <!-- data -->
     computed: {
       currentVideoStage: {
         get() {
@@ -102,9 +116,7 @@
         },
       },
     },
-    beforeMount() {
-      this.shuffleVideoStages();
-    },
+    // <!-- computed -->
     methods: {
       submitAnswer() {
         if (this.roundFinished) {
@@ -120,9 +132,7 @@
           this.notifyVue('HAS FALLADO!', 'danger');
         }
         this.roundFinished = true;
-        setTimeout(() => {
-          this.next();
-        }, 3000);
+        googleYouTube.play();
       },
       next() {
         this.videoStages.shift();
@@ -151,6 +161,26 @@
           type,
         });
       },
+      onVideoTimeChange() {
+        if (this.videoMustPause()) {
+          googleYouTube.pause();
+        }
+      },
+      videoMustPause() {
+        return !this.roundFinished
+          && googleYouTube.currenttime >= this.currentVideoStage.secondToPause;
+      },
+      onStateChange() {
+        if (VideoState.PLAYING === googleYouTube.state && this.videoMustPause()) {
+          googleYouTube.seekTo(0);
+        }
+        if (VideoState.ENDED === googleYouTube.state) {
+          setTimeout(() => {
+            this.next();
+          }, 3000);
+        }
+      },
+      // <!-- methods -->
     },
   };
 </script>
