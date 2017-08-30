@@ -16,6 +16,8 @@
     "tests"
   ],
   "dependencies": {
-    "game-card": "vpusher/game-card#^1.0.5"
+    "game-card": "vpusher/game-card#^1.0.5",
+    "google-youtube": "GoogleWebComponents/google-youtube#^1.3.0",
+    "paper-checkbox": "PolymerElements/paper-checkbox#^2.0.1"
   }
 }

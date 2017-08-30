@@ -48,7 +48,11 @@ const SidebarStore = {
       icon: 'ti-layout-column2',
       path: '/admin/cards-game',
     },
-
+    {
+      name: 'Video Game',
+      icon: 'ti-video-clapper',
+      path: '/admin/video-game',
+    },
   ],
   displaySidebar(value) {
     this.showSidebar = value;

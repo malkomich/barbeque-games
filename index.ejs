@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>webapp</title>
-  <!-- Bootstrap core CSS     -->
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
   <!--  Fonts and icons     -->
@@ -60,6 +60,21 @@
 <!-- built files will be auto injected -->
 <!--  Google Maps Plugin    -->
 <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAamVCoyQ4AuvBpxVRMs9P-HFkfPVQj0Kw" type="text/javascript"></script>
+
+<!-- Firebase Plugin -->
+<script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyD2m-P1qdDzZhsw90lL5eoeq1LxSo8mJ_E",
+    authDomain: "barbeque-games.firebaseapp.com",
+    databaseURL: "https://barbeque-games.firebaseio.com",
+    projectId: "barbeque-games",
+    storageBucket: "",
+    messagingSenderId: "469810353528"
+  };
+  firebase.initializeApp(config);
+</script>
 
 </body>
 </html>
