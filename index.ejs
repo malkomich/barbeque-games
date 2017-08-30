@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <title>webapp</title>
-  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+  <link rel="shortcut icon" type="image/x-icon" href="static/img/favicon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
   <!--  Fonts and icons     -->
   <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet" type="text/css">
   <link type="text/css" href="https://fonts.googleapis.com/css?family=Muli:400,300" rel="stylesheet">
   <link type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-  <link href="/static/css/themify-icons.css" rel="stylesheet">
+  <link href="static/css/themify-icons.css" rel="stylesheet">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
   <!-- Vuetify.js required files -->
@@ -38,33 +38,15 @@
   <script src="static/bower_components/webcomponentsjs/custom-elements-es5-adapter.js"></script>
 </div>
 
-<!--
-  Use the webcomponents-loader script which will feature detect which Web
-  Components features are missing and lazy load the appropriate polyfills.
-  When we hear the 'WebComponentsReady' event from the polyfill bundle we can
-  insert our 'bundle.js'.
--->
-<script>
-  (function() {
-    document.addEventListener('WebComponentsReady', function componentsReady() {
-      document.removeEventListener('WebComponentsReady', componentsReady, false);
-      const script = document.createElement('script');
-      script.src = '<%= htmlWebpackPlugin.files.js[0] %>';
-      const refScript = document.getElementsByTagName('script')[0];
-      refScript.parentNode.insertBefore(script, refScript);
-    }, false);
-  })();
-</script>
-<script src="static/bower_components/webcomponentsjs/webcomponents-loader.js"></script>
-
 <!-- built files will be auto injected -->
 <!--  Google Maps Plugin    -->
 <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAamVCoyQ4AuvBpxVRMs9P-HFkfPVQj0Kw" type="text/javascript"></script>
 
+<!-- 🔥🔥🔥🔥🔥🔥🔥🔥🔥 -->
 <!-- Firebase Plugin -->
 <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
 <script>
-  // Initialize Firebase
+  // Initialize Firebase //
   var config = {
     apiKey: "AIzaSyD2m-P1qdDzZhsw90lL5eoeq1LxSo8mJ_E",
     authDomain: "barbeque-games.firebaseapp.com",
@@ -75,6 +57,7 @@
   };
   firebase.initializeApp(config);
 </script>
+<!-- 🔥🔥🔥🔥🔥🔥🔥🔥🔥 -->
 
 </body>
 </html>
