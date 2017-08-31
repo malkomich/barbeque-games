@@ -1,24 +1,7 @@
 <template>
   <div class="card">
 
-    <div class="header">
-      <h4 class="title">Players</h4>
-
-      <div v-for="player in players"
-          :key="player.id">
-        <v-text-field
-            label="Player Name"
-            prepend-icon="face"
-            v-model="player.name"
-            single-line>
-        </v-text-field>
-      </div>
-
-      <v-btn dark flat v-on:click.native="addPlayer">
-        <v-icon>add</v-icon>
-        Add Player
-      </v-btn>
-    </div>
+    <player-spawn :players="players"></player-spawn>
 
     <div class="content">
       <v-container fluid>
@@ -39,6 +22,7 @@
 
 <script>
   import PaperNotification from 'src/components/UIComponents/NotificationPlugin/Notification';
+  import PlayerSpawn from 'src/components/UIComponents/PlayerSpawn';
 
   export default {
     data() {
@@ -69,6 +53,7 @@
     },
     components: {
       PaperNotification,
+      PlayerSpawn,
     },
     methods: {
       notifyVue(message) {
@@ -80,12 +65,6 @@
             horizontalAlign: 'center',
             type: 'danger',
           });
-      },
-      addPlayer() {
-        this.players.push({
-          id: this.players[this.players.length - 1].id + 1,
-          name: '',
-        });
       },
       playRound() {
         if (!this.players[0].name || !this.players[1].name) {
