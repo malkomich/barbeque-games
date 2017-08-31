@@ -1,9 +1,9 @@
 {
   "name": "barbeque-games",
-  "version": "1.0.0",
+  "version": "0.0.1-SNAPSHOT",
   "description": "Multiple games for a funny barbeque party",
   "author": "Juan Carlos González Cabrero <malkomich@gmail.com>",
-  "private": true,
+  "private": false,
   "scripts": {
     "dev": "cross-env ENABLE_ESLINT=true node build/dev-server.js",
     "build": "cross-env ENABLE_ESLINT=true node build/build.js",
@@ -19,8 +19,7 @@
     "firebase": "^4.3.0",
     "v-click-outside": "0.0.8",
     "vue": "^2.3.3",
-    "vue-router": "^2.3.1",
-    "vuefire": "^1.4.3"
+    "vue-router": "^2.3.1"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",
